@@ -49,7 +49,7 @@ class AtivoSeeder extends AbstractSeed
                 'simbolo' => 'VGIR11'
             ]
         ];
-        $this->table('ativo')
+        $this->table('ativos')
             ->insert($data)
             ->saveData();
     }

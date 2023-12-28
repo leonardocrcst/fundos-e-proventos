@@ -63,7 +63,10 @@ abstract class Entity implements EntityInterface
         $data = [];
         foreach (get_object_vars($this) as $property => $value) {
             $method = "get$property";
-            $data[$this->toPersistenceField($property)] = $this->toPersistenteValue($this->$method());
+            $field = $value instanceof EntityInterface
+                ? $this->toPersistenceField($property) . '_id'
+                : $this->toPersistenceField($property);
+            $data[$field] = $this->toPersistenteValue($this->$method());
         }
         return $data;
     }

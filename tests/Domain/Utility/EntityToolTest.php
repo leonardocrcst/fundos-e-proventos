@@ -4,7 +4,7 @@ namespace Tests\Domain\Utility;
 
 use App\Domain\Model\EntityInterface;
 use App\Domain\Utility\EntityTool;
-use App\Infrastructure\Database\Type\ColumnType;
+use App\Infrastructure\Database\ColumnDefinitions\ColumnType;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 

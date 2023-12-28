@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Database\Type;
+namespace App\Infrastructure\Database\ColumnDefinitions;
 
 enum ColumnType: string
 {
