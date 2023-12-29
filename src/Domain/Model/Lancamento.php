@@ -3,6 +3,7 @@
 namespace App\Domain\Model;
 
 use DateTime;
+use Exception;
 
 class Lancamento extends Entity implements LancamentoInterface
 {
@@ -59,5 +60,21 @@ class Lancamento extends Entity implements LancamentoInterface
     {
         $this->quantidade = $quantidade;
         return $this;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function factory(array $data): EntityInterface
+    {
+        $lancamento = new Lancamento();
+        return $lancamento->setId($data['id'])
+            ->setCreatedAt($data['created_at'])
+            ->setUpdatedAt($data['updated_at'])
+            ->setDeletedAt($data['deleted_at'])
+            ->setAtivo($data['ativo'])
+            ->setQuantidade($data['quantidade'])
+            ->setDataEvento($lancamento->fromPersistenceValue($data['data_evento']))
+            ->setValorUnitario($data['valor_unitario']);
     }
 }

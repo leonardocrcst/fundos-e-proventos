@@ -23,6 +23,7 @@
         <exclude>
             <directory>src/Infrastructure/Database/Migration</directory>
             <directory>src/Infrastructure/Database/Seed</directory>
+            <directory>src/Application/Setting</directory>
         </exclude>
     </source>
 </phpunit>

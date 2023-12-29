@@ -25,4 +25,6 @@ interface EntityInterface
     public function jsonSerialize(): array;
 
     public static function builder(): self;
+
+    public static function factory(array $data): self;
 }

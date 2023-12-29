@@ -2,7 +2,7 @@
 
 namespace App\Domain\Model;
 
-interface AtivoInterface
+interface AtivoInterface extends EntityInterface
 {
     public function getSimbolo(): string;
 

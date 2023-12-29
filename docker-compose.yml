@@ -16,7 +16,7 @@ services:
       docker: "true"
     ports:
       - "8090:8080"
-      - "9003:9003"
+      - "40279:9003"
     volumes:
       - .:/var/www
       - logs:/var/www/log

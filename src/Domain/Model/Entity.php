@@ -17,7 +17,7 @@ abstract class Entity implements EntityInterface
         return $this->id;
     }
 
-    public function setId(int $id): self
+    public function setId(?int $id = null): self
     {
         $this->id = $id;
         return $this;
@@ -28,7 +28,7 @@ abstract class Entity implements EntityInterface
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTime $createdAt): self
+    public function setCreatedAt(?DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -41,7 +41,7 @@ abstract class Entity implements EntityInterface
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTime $updatedAt): self
+    public function setUpdatedAt(?DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
         return $this;
@@ -52,8 +52,9 @@ abstract class Entity implements EntityInterface
         return $this->deletedAt;
     }
 
-    public function setDeletedAt(DateTime $deletedAt): self
+    public function setDeletedAt(?DateTime $deletedAt): self
     {
+        $this->setUpdatedAt($deletedAt);
         $this->deletedAt = $deletedAt;
         return $this;
     }

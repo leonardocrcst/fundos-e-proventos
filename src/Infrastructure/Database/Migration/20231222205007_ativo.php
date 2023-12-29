@@ -13,7 +13,7 @@ final class Ativo extends AbstractMigration
             ->addTimestamps()
             ->addColumn('deleted_at', ColumnType::TIMESTAMP->value)
             ->addColumn('simbolo', ColumnType::STRING->value, ['null' => false])
-            ->addIndex(['simbolo'], ['unique' => true, 'order' => ['simbolo' => 'ASC']])
+            ->addIndex(['simbolo', 'deleted_at'], ['unique' => true, 'order' => ['simbolo' => 'ASC', 'deleted_at' => 'DESC']])
             ->create();
     }
 }
