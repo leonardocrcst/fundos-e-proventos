@@ -1,9 +1,11 @@
 <?php
 
 use App\Domain\Repository\AtivoRepositoryInterface;
+use App\Domain\Repository\LancamentoRepositoryInterface;
 use App\Infrastructure\Database\DatabaseConnection;
 use App\Infrastructure\Database\DatabaseConnectionInterface;
 use App\Infrastructure\Repository\AtivoRepository;
+use App\Infrastructure\Repository\LancamentoRepository;
 use DI\Container;
 
 return function (Container $container): Container
@@ -15,6 +17,10 @@ return function (Container $container): Container
     $container->set(
         AtivoRepositoryInterface::class,
         fn() => new AtivoRepository($container->get(DatabaseConnectionInterface::class))
+    );
+    $container->set(
+        LancamentoRepositoryInterface::class,
+        fn() => new LancamentoRepository($container->get(DatabaseConnectionInterface::class))
     );
     return $container;
 };

@@ -3,6 +3,7 @@
 namespace App\Application\Setting;
 
 use App\Application\UseCase\Ativo as Ativo;
+use App\Application\UseCase\Lancamento as Lancamento;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
@@ -16,6 +17,10 @@ return function (App $app): void
         $group->post('', Ativo\CriarNovoAtivo::class);
         $group->delete('', Ativo\RemoverAtivo::class);
         $group->put('', Ativo\AtualizarAtivo::class);
+    });
+
+    $app->group('/api/lancamentos', function (RouteCollectorProxy $group) {
+        $group->get('', Lancamento\ListarTodosOsLancamentos::class);
     });
 
     $app->any('/[{any:.*}]', function (
