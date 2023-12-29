@@ -5,6 +5,8 @@ use Slim\Factory\AppFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+$_ENV['environment'] = 'staging';
+
 $routes = require_once __DIR__ . '/../src/Application/Setting/routes.php';
 $inject = require_once __DIR__ . '/../src/Application/Setting/inject.php';
 

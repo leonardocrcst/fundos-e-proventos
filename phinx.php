@@ -8,7 +8,7 @@ return
     ],
     'environments' => [
         'default_migration_table' => 'phinxlog',
-        'default_environment' => 'development',
+        'default_environment' => $_ENV['environment'] ?? 'development',
         'production' => [
             'adapter' => 'mysql',
             'host' => 'localhost',
@@ -16,6 +16,13 @@ return
             'user' => 'root',
             'pass' => '',
             'port' => '3306',
+            'charset' => 'utf8',
+        ],
+        'staging' => [
+            'adapter' => 'sqlite',
+            'name' => '../data/fep.sqlite3',
+            'mode' => 'rwc',
+            'suffix' => '.sqlite3',
             'charset' => 'utf8',
         ],
         'development' => [

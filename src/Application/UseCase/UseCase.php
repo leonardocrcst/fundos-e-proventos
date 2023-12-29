@@ -26,11 +26,18 @@ abstract class UseCase
         $this->response = $response;
         $this->args = $args;
         $this->requestBody = $this->parseRequestBody($request);
-        $responseBody = $this->execute();
-        $this->response->getBody()->write($responseBody->__toString());
-        return $this->response
-            ->withStatus($responseBody->getStatusCode())
-            ->withHeader('Content-Type', 'Application/Json');
+        try {
+            $responseBody = $this->execute();
+            $this->response->getBody()->write($responseBody->__toString());
+            return $this->response
+                ->withStatus($responseBody->getStatusCode())
+                ->withHeader('Content-Type', 'Application/Json');
+        } catch (\Exception $exception) {
+            $this->response->getBody()->write($exception->getMessage());
+            return $this->response
+                ->withStatus(500)
+                ->withHeader('Content-Type', 'Application/Json');
+        }
     }
 
     /**

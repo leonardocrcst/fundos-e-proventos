@@ -80,7 +80,7 @@ class EntityToolTest extends TestCase
 
             public function setId(int $id): EntityInterface
             {
-                // TODO: Implement setId() method.
+                return $this;
             }
 
             public function getCreatedAt(): ?DateTime
@@ -90,7 +90,7 @@ class EntityToolTest extends TestCase
 
             public function setCreatedAt(DateTime $createdAt): EntityInterface
             {
-                // TODO: Implement setCreatedAt() method.
+                return $this;
             }
 
             public function getUpdatedAt(): ?DateTime
@@ -100,7 +100,7 @@ class EntityToolTest extends TestCase
 
             public function setUpdatedAt(DateTime $updatedAt): EntityInterface
             {
-                // TODO: Implement setUpdatedAt() method.
+                return $this;
             }
 
             public function getDeletedAt(): ?DateTime
@@ -110,12 +110,17 @@ class EntityToolTest extends TestCase
 
             public function setDeletedAt(DateTime $deletedAt): EntityInterface
             {
-                // TODO: Implement setDeletedAt() method.
+                return $this;
             }
 
             public static function builder(): EntityInterface
             {
-                // TODO: Implement builder() method.
+                return new self();
+            }
+
+            public static function factory(array $data): EntityInterface
+            {
+                return new self();
             }
         };
         $nome = 'Lorem Ipsum';

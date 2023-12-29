@@ -4,16 +4,14 @@ namespace App\Infrastructure\Repository;
 
 use App\Domain\Model\Ativo;
 use App\Domain\Model\AtivoInterface;
-use App\Domain\Model\EntityInterface;
 use App\Domain\Repository\AtivoRepositoryInterface;
 use App\Infrastructure\Database\DatabaseAdapterException;
-use DateTime;
+use App\Infrastructure\Repository\Exception\RegisterNotFoundException;
 use Exception;
-use PDO;
 
 class AtivoRepository extends EntityRepository implements AtivoRepositoryInterface
 {
-    private const string TABLE_NAME = 'ativos';
+    public static string $tableName = 'ativos';
 
     /**
      * @throws DatabaseAdapterException
@@ -21,56 +19,42 @@ class AtivoRepository extends EntityRepository implements AtivoRepositoryInterfa
      */
     public function openBySimbolo(string $simbolo): AtivoInterface
     {
-        $query = sprintf(
-            "%s * FROM %s WHERE simbolo = '%s'",
-            'SELECT',
-            self::TABLE_NAME,
-            addslashes($simbolo)
-        );
-        $request = $this->connection->getConnection()->query($query);
-        $data = $request->fetch(PDO::FETCH_ASSOC);
-        if (!empty($data)) {
-            return Ativo::factory($data);
+        $data = parent::openBy('simbolo', $simbolo);
+        if (empty($data)) {
+            throw new RegisterNotFoundException("\"$simbolo\" at " . self::$tableName);
         }
+        return Ativo::factory($data);
+    }
+
+    /**
+     * @return AtivoInterface[]
+     * @throws DatabaseAdapterException
+     * @throws Exception
+     */
+    public function list(?array $columns = null): array
+    {
+        $data = parent::list($columns);
+        if (empty($data)) {
+            throw new RegisterNotFoundException(self::$tableName . " is empty");
+        }
+        return array_map(fn($item) => Ativo::factory($item), $data);
     }
 
     /**
      * @throws DatabaseAdapterException
      * @throws Exception
      */
-    public function list(): array
+    public function openById(int $id): AtivoInterface
     {
-        $query = sprintf(
-            "%s * FROM %s WHERE deleted_at is NULL",
-            'SELECT',
-            self::TABLE_NAME
-        );
-        $request = $this->connection->getConnection()->query($query);
-        $data = $request->fetchAll(PDO::FETCH_ASSOC);
-        if (!empty($data)) {
-            return array_map(fn($item) => Ativo::factory($item), $data);
+        $data = parent::openBy('id', $id);
+        if (empty($data)) {
+            throw new RegisterNotFoundException("Row \"$id\" at " . self::$tableName);
         }
+        return Ativo::factory($data);
     }
 
-    public function save(AtivoInterface $ativo): int
+    protected function getTable(): string
     {
-        if ($ativo->getId()) {
-            $ativo->setUpdatedAt(new DateTime());
-        }
-    }
-
-    public function remove(EntityInterface $entity): void
-    {
-        // TODO: Implement remove() method.
-    }
-
-    public function openBy(string $field, mixed $value): EntityInterface
-    {
-        // TODO: Implement openBy() method.
-    }
-
-    public function openById(int $id): EntityInterface
-    {
-        // TODO: Implement openById() method.
+        return self::$tableName;
     }
 }
