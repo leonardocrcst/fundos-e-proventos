@@ -14,6 +14,8 @@ return function (App $app): void
     $app->group('/api/ativos', function (RouteCollectorProxy $group) {
         $group->get('', Ativo\ListarTodosOsAtivos::class);
         $group->post('', Ativo\CriarNovoAtivo::class);
+        $group->delete('', Ativo\RemoverAtivo::class);
+        $group->put('', Ativo\AtualizarAtivo::class);
     });
 
     $app->any('/[{any:.*}]', function (

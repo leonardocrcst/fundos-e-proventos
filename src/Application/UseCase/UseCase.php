@@ -4,6 +4,7 @@ namespace App\Application\UseCase;
 
 use App\Application\UseCase\Dto\ResponseDto;
 use App\Application\UseCase\Exception\InvalidRequestBodyException;
+use App\Domain\Model\EntityInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -54,6 +55,15 @@ abstract class UseCase
             throw new InvalidRequestBodyException();
         }
         return $body;
+    }
+
+    /**
+     * @param EntityInterface[] $entities
+     * @return array
+     */
+    protected function serializeEntities(array $entities): array
+    {
+        return array_map(fn($item) => $item->jsonSerialize(), $entities);
     }
 
     abstract public function execute(): ResponseDto;

@@ -8,7 +8,7 @@ interface EntityRepositoryInterface
 {
     public function remove(EntityInterface &$entity): void;
 
-    public function openBy(string $field, mixed $value): ?array;
+    public function openBy(string $field, mixed $value): mixed;
 
     public function openById(int $id): EntityInterface;
 

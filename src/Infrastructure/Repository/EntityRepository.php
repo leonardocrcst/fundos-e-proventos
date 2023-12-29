@@ -71,13 +71,19 @@ abstract class EntityRepository implements EntityRepositoryInterface
      * @throws DatabaseAdapterException
      * @throws Exception
      */
-    public function openBy(string $field, mixed $value): ?array
+    public function openBy(string $field, mixed $value): mixed
     {
         $query = $this->getSelectQueryByFieldValue($field, $value);
         $request = $this->connection->getConnection()->query(
             $query
         );
-        return $request->fetch(PDO::FETCH_ASSOC);
+        $all = $request->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($all)) {
+            return count($all) > 1
+                ? $all
+                : $all[0];
+        }
+        return $all;
     }
 
     abstract protected function getTable(): string;
