@@ -32,14 +32,16 @@ trait EntityTool
      */
     public function fromPersistenceValue(mixed $value): mixed
     {
-        $transformed = $value;
-        if (in_array($value, [0, 1, '0', '1'])) {
-            $transformed = $value === 1;
+        if (!empty($value)) {
+            $transformed = $value;
+            if (in_array($value, [0, 1, '0', '1'])) {
+                $transformed = $value === 1;
+            }
+            if (DateTool::isDateTime($value)) {
+                $transformed = new DateTime($value);
+            }
+            return $transformed;
         }
-        if (DateTool::isDateTime($value)) {
-            $transformed = new DateTime($value);
-        }
-        return $transformed;
     }
 
     public function toPersistenceField(string $name): string
